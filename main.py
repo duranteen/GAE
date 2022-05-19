@@ -56,14 +56,19 @@ class GraphMatrixCompletion(nn.Module):
                                      dropout=DROPOUT_RATIO, activation=lambda x: x)
         self.decoder = Decoder(encode_hidden_dim, num_basis, num_classes,
                                dropout=DROPOUT_RATIO, activation=lambda x: x)
+        print(self.encoder)
+        print(self.dense1)
+        print(self.dense2)
+        print(self.decoder)
 
     def forward(self, user_supports, item_supports,
                 user_inputs, item_inputs,
                 user_side_inputs, item_side_inputs,
                 user_edge_idx, item_edge_idx):
         user_gcn, movie_gcn = self.encoder(user_supports, item_supports, user_inputs, item_inputs)
+        # print(user_gcn.shape)
         user_side_feat, movie_side_feat = self.dense1(user_side_inputs, item_side_inputs)
-
+        # print(user_side_feat.shape)
         user_feat = torch.cat((user_gcn, user_side_feat), dim=1)
         movie_feat = torch.cat((movie_gcn, movie_side_feat), dim=1)
 
@@ -100,6 +105,7 @@ model_inputs = (user2movie_adjacencies, movie2user_adjacencies,
                 user_identity_feature, movie_identity_feature,
                 user_side_feature, movie_side_feature, user_indices, movie_indices)
 
+# print(model)
 
 def train():
     test_result = []

@@ -61,12 +61,12 @@ class CatGCNEncoder(nn.Module):
 
         user_hidden = torch.cat(user_hidden, dim=1)
         item_hidden = torch.cat(item_hidden, dim=1)
+
         user_outputs = self.activation(user_hidden)
         item_outputs = self.activation(item_hidden)
         if self.use_bias:
             user_outputs = user_outputs.clone() + self.bias_user
             item_outputs = item_outputs.clone() + self.bias_item
-
         return user_outputs, item_outputs
 
 

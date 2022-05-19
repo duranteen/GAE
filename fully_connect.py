@@ -47,9 +47,10 @@ class FullyConnected(nn.Module):
         :param item_inputs:
         :return:
         """
+        print("user_inputs", user_inputs.shape)
         x_u = self.dropout(user_inputs)
         x_u = torch.matmul(x_u, self.weights_u)
-
+        print("x_u", x_u.shape)
         x_v = self.dropout(item_inputs)
         x_v = torch.matmul(x_v, self.weights_v)
 
